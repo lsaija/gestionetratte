@@ -41,7 +41,7 @@ public class TrattaDTO {
 	private StatoTratta stato;
 
 	@JsonIgnoreProperties(value = { "tratte" })
-	@NotNull(message = "{tratte.notnull}")
+	@NotNull(message = "{airbus.notnull}")
 	private AirbusDTO airbus;
 
 	public TrattaDTO() {
