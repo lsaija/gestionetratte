@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
+import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
-
-public class TrattaServiceImpl implements TrattaService{
+public class TrattaServiceImpl implements TrattaService {
 	@Autowired
 	private TrattaRepository repository;
 
@@ -37,24 +37,16 @@ public class TrattaServiceImpl implements TrattaService{
 	public Tratta inserisciNuovo(Tratta trattaInstance) {
 		return repository.save(trattaInstance);
 	}
-/*Da Implementare eccezioni custom 
+
 	@Transactional
 	public void rimuovi(Long idToRemove) {
 		repository.findById(idToRemove)
 				.orElseThrow(() -> new TrattaNotFoundException("Tratta not found con id: " + idToRemove));
 		repository.deleteById(idToRemove);
-	}*/
+	}
 
 	public List<Tratta> findByExample(Tratta example) {
 		return repository.findByExample(example);
 	}
-
-	@Override
-	public void rimuovi(Long idToRemove) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 }
