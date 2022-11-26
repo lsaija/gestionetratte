@@ -68,6 +68,15 @@ public class AirbusDTO {
 		this.codice = codice;
 		this.descrizione = descrizione;
 	}
+	
+
+	public AirbusDTO(String codice,String descrizione,LocalDate dataInizio,Integer numeroPasseggeri) {
+		super();
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.dataInizio = dataInizio;
+		this.numeroPasseggeri = numeroPasseggeri;
+	}
 
 	public AirbusDTO(Long id, String codice, String descrizione, LocalDate dataInizio, Integer numeroPasseggeri) {
 		super();

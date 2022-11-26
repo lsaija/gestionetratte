@@ -2,7 +2,6 @@ package it.prova.gestionetratte.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,6 +64,18 @@ public class TrattaDTO {
 			LocalTime oraAtterraggio, StatoTratta stato) {
 		super();
 		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.data = data;
+		this.oraDecollo = oraDecollo;
+		this.oraAtterraggio = oraAtterraggio;
+		this.stato = stato;
+	}
+	
+	
+
+	public TrattaDTO(String codice,String descrizione, LocalDate data,LocalTime oraDecollo,LocalTime oraAtterraggio,StatoTratta stato) {
+		super();
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.data = data;

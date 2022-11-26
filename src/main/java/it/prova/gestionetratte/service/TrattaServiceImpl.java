@@ -3,12 +3,14 @@ package it.prova.gestionetratte.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
+@Service
 public class TrattaServiceImpl implements TrattaService {
 	@Autowired
 	private TrattaRepository repository;
@@ -47,6 +49,10 @@ public class TrattaServiceImpl implements TrattaService {
 
 	public List<Tratta> findByExample(Tratta example) {
 		return repository.findByExample(example);
+	}
+
+	public List<Tratta> findByCodiceAndDescrizione(String codice, String descrizione) {
+		return repository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
 }

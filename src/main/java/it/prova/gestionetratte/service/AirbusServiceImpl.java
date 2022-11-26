@@ -3,12 +3,14 @@ package it.prova.gestionetratte.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.airbus.AirbusRepository;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 
+@Service
 public class AirbusServiceImpl implements AirbusService {
 	@Autowired
 	private AirbusRepository repository;
@@ -44,11 +46,20 @@ public class AirbusServiceImpl implements AirbusService {
 	public void rimuovi(Long idToRemove) {
 		repository.findById(idToRemove)
 				.orElseThrow(() -> new AirbusNotFoundException("Airbus not found con id: " + idToRemove));
+
 		repository.deleteById(idToRemove);
 	}
 
 	public List<Airbus> findByExample(Airbus example) {
 		return repository.findByExample(example);
+	}
+
+	public List<Airbus> cercaByCodiceEDescrizioneILike(String term) {
+		return repository.findByCodiceIgnoreCaseContainingOrDescrizioneIgnoreCaseContainingOrderByCodiceAsc(term, term);
+	}
+
+	public Airbus findByCodiceAndDescrizione(String codice, String descrizione) {
+		return repository.findByCodiceAndDescrizione(codice, descrizione);
 	}
 
 }

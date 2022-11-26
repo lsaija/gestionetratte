@@ -7,13 +7,17 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.prova.gestionetratte.model.Airbus;
 
+public interface AirbusRepository extends CrudRepository<Airbus, Long>, CustomAirbusRepository {
 
-public interface AirbusRepository extends CrudRepository<Airbus, Long>,CustomAirbusRepository{
-	
 	@Query("select distinct a from Airbus a left join fetch a.tratte ")
 	List<Airbus> findAllEager();
 
 	@Query("from Airbus a left join fetch a.tratte where a.id=?1")
 	Airbus findByIdEager(Long idAirbus);
+
+	Airbus findByCodiceAndDescrizione(String codice, String descrizione);
+
+	List<Airbus> findByCodiceIgnoreCaseContainingOrDescrizioneIgnoreCaseContainingOrderByCodiceAsc(String codice,
+			String descrizione);
 
 }
