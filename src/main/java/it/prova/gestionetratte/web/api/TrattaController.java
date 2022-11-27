@@ -83,7 +83,7 @@ public class TrattaController {
 				false);
 	}
 	
-	@PostMapping("/concludiTratte")
+	@GetMapping("/concludiTratte")
 	public List<TrattaDTO> concludiTratte() {
 		return TrattaDTO.createTrattaDTOListFromModelList(trattaService.concludiTratte(trattaService.listAllElements(true)),true);
 	}
