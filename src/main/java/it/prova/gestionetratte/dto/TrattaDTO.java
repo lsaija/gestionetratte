@@ -173,6 +173,17 @@ public class TrattaDTO {
 
 		return result;
 	}
+	
+	public static Tratta buildTrattaFromDTO(TrattaDTO trattaDTO, boolean includeAirbus) {
+		Tratta result = new Tratta(trattaDTO.getId(), trattaDTO.getCodice(), trattaDTO.getDescrizione(),
+				trattaDTO.getData(), trattaDTO.getOraDecollo(), trattaDTO.getOraAtterraggio(),
+				trattaDTO.getStato());
+
+		if (includeAirbus)
+			result.setAirbus(AirbusDTO.buildAirbusFromDTO(trattaDTO.getAirbus(), false));
+
+		return result;
+	}
 
 	public static List<TrattaDTO> createTrattaDTOListFromModelList(List<Tratta> modelListInput, boolean includeAirbus) {
 		return modelListInput.stream().map(trattaEntity -> {
@@ -183,6 +194,12 @@ public class TrattaDTO {
 	public static Set<TrattaDTO> createTrattaDTOSetFromModelSet(Set<Tratta> modelListInput, boolean includeAirbus) {
 		return modelListInput.stream().map(trattaEntity -> {
 			return TrattaDTO.buildTrattaDTOFromModel(trattaEntity, includeAirbus);
+		}).collect(Collectors.toSet());
+	}
+	
+	public static Set<Tratta> createTrattaSetFromDTOSet(Set<TrattaDTO> modelListInput, boolean includeAirbus) {
+		return modelListInput.stream().map(trattaEntity -> {
+			return TrattaDTO.buildTrattaFromDTO(trattaEntity, includeAirbus);
 		}).collect(Collectors.toSet());
 	}
 

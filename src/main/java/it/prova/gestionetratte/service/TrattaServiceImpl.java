@@ -1,5 +1,8 @@
 package it.prova.gestionetratte.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +70,21 @@ public class TrattaServiceImpl implements TrattaService {
 
 	public List<Tratta> findByCodiceAndDescrizione(String codice, String descrizione) {
 		return repository.findByCodiceAndDescrizione(codice, descrizione);
+	}
+
+	@Transactional
+	public List<Tratta> concludiTratte(List<Tratta> tratte) {
+		List<TrattaDTO> tratteDTO = TrattaDTO.createTrattaDTOListFromModelList((List<Tratta>) repository.findAll(),
+				true);
+		List<Tratta> result = new ArrayList<Tratta>();
+		for (TrattaDTO trattaItem : tratteDTO) {
+			if (trattaItem.getStato().equals(StatoTratta.ATTIVA) && trattaItem.getData().isBefore(LocalDate.now())
+					&& trattaItem.getOraAtterraggio().isBefore(LocalTime.now())) {
+				trattaItem.setStato(StatoTratta.CONCLUSA);
+				result.add(repository.save(TrattaDTO.buildTrattaFromDTO(trattaItem, true)));
+			}
+		}
+		return result;
 	}
 
 }
