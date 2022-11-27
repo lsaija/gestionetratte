@@ -2,6 +2,7 @@ package it.prova.gestionetratte.service;
 
 import java.util.List;
 
+import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.model.Airbus;
 
 
@@ -27,5 +28,7 @@ public interface AirbusService {
 	Airbus findByCodiceAndDescrizione(String codice, String descrizione);
 	
 	List<Airbus> cercaByCodiceEDescrizioneILike(String term);
-
+	
+	List<AirbusDTO> cercaAirbusConSovapposizioniDiTratte(List<Airbus> listaAirbus);
+	
 }

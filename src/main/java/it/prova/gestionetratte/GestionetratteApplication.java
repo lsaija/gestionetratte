@@ -54,12 +54,27 @@ public class GestionetratteApplication implements CommandLineRunner {
 		DateTimeFormatter formatterOraArrivo = DateTimeFormatter.ofPattern("HH.mm");
 		String time1 = "10.20";
 		LocalTime localTimeObjArrivo = LocalTime.parse(time1, formatterOraArrivo);
+		
+		DateTimeFormatter formatterOraDecollo1 = DateTimeFormatter.ofPattern("HH.mm");
+		String time2 = "09.20";
+		LocalTime localTimeObjDecollo1 = LocalTime.parse(time2, formatterOraDecollo1);
+
+		DateTimeFormatter formatterOraArrivo1 = DateTimeFormatter.ofPattern("HH.mm");
+		String time3 = "11.20";
+		LocalTime localTimeObjArrivo1 = LocalTime.parse(time3, formatterOraArrivo1);
 
 		Tratta trattaRomaBangkok = new Tratta("HSYYDHDI", "Roma - bangkok", localDate, localTimeObjDecollo,
 				localTimeObjArrivo, StatoTratta.ATTIVA, airbusNew);
 		if (trattaService.findByCodiceAndDescrizione(trattaRomaBangkok.getCodice(), trattaRomaBangkok.getDescrizione())
 				.isEmpty()) {
 			trattaService.inserisciNuovo(trattaRomaBangkok);
+		}
+		
+		Tratta trattaPoloniaBangkok = new Tratta("fksnkgdhòio", "polonia - bangkok", localDate, localTimeObjDecollo1,
+				localTimeObjArrivo1, StatoTratta.ATTIVA, airbusNew);
+		if (trattaService.findByCodiceAndDescrizione(trattaPoloniaBangkok.getCodice(), trattaPoloniaBangkok.getDescrizione())
+				.isEmpty()) {
+			trattaService.inserisciNuovo(trattaPoloniaBangkok);
 		}
 
 		String codiceLondraMilano = "GSTDJHSGDYDJ";
