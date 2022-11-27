@@ -68,6 +68,29 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
 
 		return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
+	
+	@ExceptionHandler(TrattaNotCancelledException.class)
+	public ResponseEntity<Object> handleTrattaNotCancelledException(TrattaNotCancelledException ex, WebRequest request) {
 
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AirbusWithTratteException.class)
+	public ResponseEntity<Object> handleAirbusWithTratteExceptionException(AirbusWithTratteException ex, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	}
+
+	
 
 }

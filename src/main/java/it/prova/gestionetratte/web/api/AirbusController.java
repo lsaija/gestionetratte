@@ -20,19 +20,19 @@ import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.service.AirbusService;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
+import it.prova.gestionetratte.web.api.exception.AirbusWithTratteException;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
-
 
 @RestController
 @RequestMapping("api/airbus")
 public class AirbusController {
-	
+
 	@Autowired
 	private AirbusService airbusService;
 
 	@GetMapping
 	public List<AirbusDTO> getAll() {
-		
+
 		return AirbusDTO.createAirbusDTOListFromModelList(airbusService.listAllElementsEager(), true);
 	}
 
@@ -45,7 +45,6 @@ public class AirbusController {
 
 		return AirbusDTO.buildAirbusDTOFromModel(airbus, true);
 	}
-
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -72,6 +71,11 @@ public class AirbusController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
+		Airbus airbus = airbusService.caricaSingoloElementoConTratte(id);
+
+		if (airbus.getTratte().size() > 0)
+			throw new AirbusWithTratteException("Airbus with tratte !");
+
 		airbusService.rimuovi(id);
 	}
 

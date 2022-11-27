@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.dto.TrattaDTO;
+import it.prova.gestionetratte.model.StatoTratta;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
+import it.prova.gestionetratte.web.api.exception.TrattaNotCancelledException;
 import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
 @Service
@@ -44,7 +47,18 @@ public class TrattaServiceImpl implements TrattaService {
 	public void rimuovi(Long idToRemove) {
 		repository.findById(idToRemove)
 				.orElseThrow(() -> new TrattaNotFoundException("Tratta not found con id: " + idToRemove));
-		repository.deleteById(idToRemove);
+		// condizione tratta annullata
+		TrattaDTO trattaToRemove = TrattaDTO.buildTrattaDTOFromModel(repository.findById(idToRemove).orElse(null),
+				false);
+		try {
+			if (trattaToRemove.getStato() != StatoTratta.ANNULLATA)
+				throw new TrattaNotCancelledException("Tratta not Cancelled!");
+
+			repository.deleteById(idToRemove);
+		} catch (TrattaNotFoundException e) {
+
+		}
+
 	}
 
 	public List<Tratta> findByExample(Tratta example) {
